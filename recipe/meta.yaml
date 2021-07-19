@@ -15,19 +15,29 @@ build:
 requirements:
   host:
     - python
+    - pip
     - setuptools
+    - wheel
+    - poetry-core >=1.0.0
   run:
     - python
 
 test:
   imports:
     - iso8601
+  requires:
+    - pip
+  commands:
+    - pip check
 
 about:
-  home: https://bitbucket.org/micktwomey/pyiso8601
+  home: https://github.com/micktwomey/pyiso8601
   license: MIT
+  license_family: MIT
+  license_file: LICENSE
   summary: 'Simple module to parse ISO 8601 dates'
   doc_url: http://pyiso8601.readthedocs.io/en/latest/
+  dev_url: https://github.com/micktwomey/pyiso8601
 
 extra:
     recipe-maintainers:
