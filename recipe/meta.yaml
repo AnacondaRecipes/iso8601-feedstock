@@ -1,4 +1,4 @@
-{% set version = "0.1.14" %}
+{% set version = "0.1.16" %}
 
 package:
   name: iso8601
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/i/iso8601/iso8601-{{ version }}.tar.gz
-  sha256: 8aafd56fa0290496c5edbb13c311f78fa3a241f0853540da09d9363eae3ebd79
+  sha256: 36532f77cc800594e8f16641edae7f1baf7932f05d8e508545b95fc53c6dc85b
 
 build:
   number: 1
@@ -15,19 +15,29 @@ build:
 requirements:
   host:
     - python
+    - pip
     - setuptools
+    - wheel
+    - poetry-core >=1.0.0
   run:
     - python
 
 test:
   imports:
     - iso8601
+  requires:
+    - pip
+  commands:
+    - pip check
 
 about:
-  home: https://bitbucket.org/micktwomey/pyiso8601
+  home: https://github.com/micktwomey/pyiso8601
   license: MIT
+  license_family: MIT
+  license_file: LICENSE
   summary: 'Simple module to parse ISO 8601 dates'
   doc_url: http://pyiso8601.readthedocs.io/en/latest/
+  dev_url: https://github.com/micktwomey/pyiso8601
 
 extra:
     recipe-maintainers:
