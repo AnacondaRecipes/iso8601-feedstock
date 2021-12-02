@@ -1,4 +1,4 @@
-{% set version = "0.1.16" %}
+{% set version = "1.0.2" %}
 
 package:
   name: iso8601
@@ -6,11 +6,12 @@ package:
 
 source:
   url: https://pypi.io/packages/source/i/iso8601/iso8601-{{ version }}.tar.gz
-  sha256: 36532f77cc800594e8f16641edae7f1baf7932f05d8e508545b95fc53c6dc85b
+  sha256: 27f503220e6845d9db954fb212b95b0362d8b7e6c1b2326a87061c3de93594b1
 
 build:
-  number: 1
-  script: python setup.py install --single-version-externally-managed --record record.txt
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
   host:
@@ -20,13 +21,14 @@ requirements:
     - wheel
     - poetry-core >=1.0.0
   run:
-    - python
+    - python >=3.6.2,<4.0
 
 test:
   imports:
     - iso8601
   requires:
     - pip
+    - python <3.10
   commands:
     - pip check
 
