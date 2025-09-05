@@ -1,17 +1,18 @@
-{% set version = "1.0.2" %}
+{% set name = "iso8601" %}
+{% set version = "2.1.0" %}
 
 package:
-  name: iso8601
+  name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/i/iso8601/iso8601-{{ version }}.tar.gz
-  sha256: 27f503220e6845d9db954fb212b95b0362d8b7e6c1b2326a87061c3de93594b1
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 6b1d3829ee8921c4301998c909f7829fa9ed3cbdac0d3b16af2d743aed1ba8df
 
 build:
   number: 0
-  noarch: python
-  script: {{ PYTHON }} -m pip install . -vv
+  skip: true  # [py<37]
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
 
 requirements:
   host:
@@ -21,24 +22,35 @@ requirements:
     - wheel
     - poetry-core >=1.0.0
   run:
-    - python >=3.6.2,<4.0
+    - python
 
 test:
+  source_files:
+    - iso8601
   imports:
     - iso8601
+    - hypothesis.extra
+    - hypothesis.strategies
   requires:
     - pip
-    - python <3.10
+    - pytest
+    - hypothesis
+    - pytz
   commands:
     - pip check
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
+    - pytest -ra -vvv iso8601/test_iso8601.py
 
 about:
   home: https://github.com/micktwomey/pyiso8601
   license: MIT
   license_family: MIT
   license_file: LICENSE
-  summary: 'Simple module to parse ISO 8601 dates'
-  doc_url: http://pyiso8601.readthedocs.io/en/latest/
+  summary: Simple module to parse ISO 8601 dates
+  description: |
+    This module parses the most common forms of ISO 8601
+    date strings (e.g. 2007-01-14T20:34:22+00:00) into datetime objects
+  doc_url: https://pyiso8601.readthedocs.io
   dev_url: https://github.com/micktwomey/pyiso8601
 
 extra:
